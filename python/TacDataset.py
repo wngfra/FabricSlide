@@ -20,7 +20,7 @@ class TacDataset(Dataset):
         for _, _, filenames in os.walk(self.root_dir):
             self.filenames = list(filter(lambda x: '.csv' in x, filenames))
 
-        self.class_names = [''] * len(self.filenames)
+        self.class_names = [""] * len(self.filenames)
         self.params = np.zeros((len(self.filenames), 2))
 
         for i, filename in enumerate(self.filenames):

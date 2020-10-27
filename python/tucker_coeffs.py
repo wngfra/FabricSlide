@@ -17,7 +17,7 @@ def extract_coeffs(ds):
 
     for i in range(len(ds)):
         sample, _ = ds[i]
-        fcoeffs[:, :, i] = sample
+        fcoeffs[:, :, i] = np.cov(sample)
 
     return fcoeffs
 
@@ -25,9 +25,9 @@ def extract_coeffs(ds):
 def tucker_factorize(root_dir, transform):
     ds = TacDataset(root_dir, transform=tf)
     coeff_tensor = extract_coeffs(ds)
-    _, factors = tucker(coeff_tensor, ranks=(3, 1, coeff_tensor.shape[2]))
+    core, factors = tucker(coeff_tensor, ranks=(3, 1, coeff_tensor.shape[2]))
 
-    return np.array(factors, dtype=object)
+    return core, factors
 
 
 if __name__ == "__main__":
@@ -35,5 +35,6 @@ if __name__ == "__main__":
         [Normalize(axis=1), ToFDA(basis='Fourier', n_basis=n_basis, period=period)])
     # tf = transforms.Compose([ToSequence(sequence_length, stride), ToFDA(basis='Fourier', n_basis=n_basis, period=period)])
 
-    factors = tucker_factorize('../data/fabric', tf)
+    core, factors = tucker_factorize('../data/fabric', tf)
+    np.save('core.npy', core)
     np.save('factors.npy', factors)

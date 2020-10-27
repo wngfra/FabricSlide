@@ -93,7 +93,7 @@ class ToFDA(object):
     def __call__(self, sample):
         if self.basis == 'Fourier':
             fd_basis = basis.Fourier(
-                [0, 2 * 2 * np.pi], n_basis=self.n_basis, period=self.period)
+                [0, 2 * np.pi], n_basis=self.n_basis, period=self.period)
         else:
             fd_basis = basis.BSpline(n_basis=self.n_basis, order=self.order)
 

@@ -13,7 +13,7 @@ period = 1
 
 
 def extract_coeffs(ds):
-    fcoeffs = np.zeros((n_basis, n_channel, len(ds)))
+    fcoeffs = np.zeros((n_basis, n_basis, len(ds)))
 
     for i in range(len(ds)):
         sample, _ = ds[i]
@@ -27,7 +27,11 @@ def tucker_factorize(root_dir, transform):
     coeff_tensor = extract_coeffs(ds)
     core, factors = tucker(coeff_tensor, ranks=(3, 1, coeff_tensor.shape[2]))
 
-    return core, factors
+    params = ds.get_params()
+    d = {'class_name': ds.get_class_names(), 'class_id': ds.get_class_ids(), 'pressure': params[:, 0], 'speed': params[:, 1]}
+    df  = pd.DataFrame(data=d)
+
+    return core, factors, df
 
 
 if __name__ == "__main__":
@@ -35,6 +39,7 @@ if __name__ == "__main__":
         [Normalize(axis=1), ToFDA(basis='Fourier', n_basis=n_basis, period=period)])
     # tf = transforms.Compose([ToSequence(sequence_length, stride), ToFDA(basis='Fourier', n_basis=n_basis, period=period)])
 
-    core, factors = tucker_factorize('../data/fabric', tf)
+    core, factors, info = tucker_factorize('../data/fabric', tf)
     np.save('core.npy', core)
-    np.save('factors.npy', factors)
+    np.save('factors.npy', np.array(factors, dtype=object))
+    info.to_csv('info.csv')

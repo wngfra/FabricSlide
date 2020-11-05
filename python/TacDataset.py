@@ -97,12 +97,12 @@ class ToFDA(object):
         else:
             fd_basis = basis.BSpline(n_basis=self.n_basis, order=self.order)
 
-        data_matrix = sample.reshape(sample.shape[0], -1).transpose()
+        data_matrix = sample.transpose()
         fd = FDataGrid(data_matrix).to_basis(fd_basis)
-        coeffs = fd.coefficients.astype(np.float32).reshape(-1, sample.shape[1], self.n_basis)
+        coeffs = fd.coefficients.astype(np.float32).squeeze()
 
         if self.transpose:
-            coeffs = coeffs.transpose([2, 1, 0])
+            coeffs = coeffs.transpose()
 
         return coeffs.squeeze()
 
@@ -114,7 +114,7 @@ class Normalize(object):
         self.axis = axis
 
     def __call__(self, sample):
-        return sample / np.mean(sample, axis=self.axis, keepdims=True)
+        return (sample - np.mean(sample, axis=self.axis, keepdims=True)) / np.var(sample, axis=self.axis, keepdims=True)
 
 
 class ToFFT(object):

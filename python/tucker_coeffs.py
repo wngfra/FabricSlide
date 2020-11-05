@@ -5,6 +5,8 @@ from tensorly.decomposition import tucker
 from torchvision import transforms
 from TacDataset import Normalize, TacDataset, ToFDA, ToFFT
 
+import matplotlib.pyplot as plt
+
 
 n_basis = 33
 n_channel = 16
@@ -12,11 +14,12 @@ period = 1
 
 
 def extract_coeffs(ds):
-    fcoeffs = np.zeros((n_channel, n_channel, len(ds)))
+    fcoeffs = np.zeros((n_basis-1, n_basis-1, len(ds)))
 
     for i in range(len(ds)):
         sample, _ = ds[i]
-        fcoeffs[:, :, i] = np.cov(sample[1:, :].transpose())
+        cov = np.cov(sample[1:, :])
+        fcoeffs[:, :, i] = cov
 
     return fcoeffs
 

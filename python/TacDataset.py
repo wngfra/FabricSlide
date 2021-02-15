@@ -114,7 +114,7 @@ class Normalize(object):
         self.axis = axis
 
     def __call__(self, sample):
-        return (sample - np.mean(sample, axis=self.axis, keepdims=True)) / np.var(sample, axis=self.axis, keepdims=True)
+        return (sample - np.mean(sample, axis=self.axis, keepdims=True)) / np.std(sample, axis=self.axis, keepdims=True)
 
 
 class ToFFT(object):

@@ -1,6 +1,5 @@
 services:
   jupyter-notebook:
-    command: python -c "import torch as T;print(T.cuda.is_available())"
     image: wngfra/ros2cuda:pytorch-notebook
     ports:
         - 8888:8888

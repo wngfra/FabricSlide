@@ -115,36 +115,3 @@ class Normalize(object):
 
     def __call__(self, sample):
         return (sample - np.mean(sample, axis=self.axis, keepdims=True)) / np.std(sample, axis=self.axis, keepdims=True)
-
-
-class ToFFT(object):
-
-    def __init__(self, axis=0):
-        self.axis = axis
-
-    def __call__(self, sample):
-        L = sample.shape[self.axis]
-        fs = fft(sample/L, axis=self.axis)
-        fs = fs[1:len(fs) // 2 + 1, :]
-
-        composite_fs = np.vstack([np.real(fs), np.imag(fs)])
-
-        return composite_fs
-
-
-class ToSequence(object):
-
-    def __init__(self, length, stride=1):
-        self.length = length
-        self.stride = stride
-
-    def __call__(self, sample):
-        nrows, ncols = sample.shape
-        seq_length = int((nrows - self.length) / self.stride) + 1
-        seq = np.empty((self.length, ncols, seq_length),
-                       dtype=np.float32)
-
-        for i in range(seq_length):
-            seq[:, :, i] = sample[self.stride*i:self.stride*i+self.length, :]
-
-        return seq

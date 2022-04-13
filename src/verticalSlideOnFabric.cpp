@@ -55,11 +55,11 @@ int slideMulti(franka::Robot &robot, franka::Gripper &gripper, int startID, int 
 
     // fabric list
     map<int, string> fabrics;
-    fabrics[0] = "jeansnormale";
-    fabrics[1] = "jeansmorbido";
-    // fabrics[2] = "cotonebeige3";
-    // fabrics[3] = "verde2";
-    // fabrics[4] = "verde3";
+    fabrics[0] = "fabric1";
+    fabrics[1] = "fabric2";
+    fabrics[2] = "fabric3";
+    fabrics[3] = "fabric4";
+    fabrics[4] = "fabric5";
 
     // Define robot variables
     double p_x = 0.1;

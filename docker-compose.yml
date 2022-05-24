@@ -1,11 +1,11 @@
 services:
   jupyter-notebook:
-    image: wngfra/dl-jupyterlab:functional-data-analysis
+    image: wngfra/dl-jupyterlab:da
     ports:
         - 8888:8888
     volumes:
       - ../FabricSlide:/workspace/FabricSlide
-    container_name: functional-data-analysis
+    container_name: data-analysis
     runtime: nvidia
     environment:
       - NVIDIA_VISIBLE_DEVICES=all

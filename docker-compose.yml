@@ -6,6 +6,10 @@ services:
     volumes:
       - ../FabricSlide:/workspace/FabricSlide
     container_name: data-analysis
-    runtime: nvidia
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

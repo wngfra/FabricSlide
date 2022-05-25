@@ -1,10 +1,10 @@
 services:
-  jupyterlab:
-    image: wngfra/dl-jupyterlab:da
+  lab:
+    build: ./docker
     ports:
       - 8888:8888
     volumes:
-      - ../FabricSlide:/workdir/FabricSlide
+      - ../FabricSlide:/workspace/FabricSlide
     container_name: data-analysis
     ulimits:
       memlock: -1

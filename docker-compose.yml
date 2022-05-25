@@ -1,11 +1,14 @@
 services:
-  jupyter-notebook:
+  jupyterlab:
     image: wngfra/dl-jupyterlab:da
     ports:
-        - 8888:8888
+      - 8888:8888
     volumes:
-      - ../FabricSlide:/workspace/FabricSlide
+      - ../FabricSlide:/workdir/FabricSlide
     container_name: data-analysis
+    ulimits:
+      memlock: -1
+    shm_size: '8gb'
     deploy:
       resources:
         reservations:

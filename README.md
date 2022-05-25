@@ -7,9 +7,10 @@ Tactile Sensing via Sliding Motion
 * Default build-type is `Release`, for debugging with GDB, change the build-type in `CMakeLists.txt`
 
 ## Data Analysis
-1. Pre-built jupyterlab images can be found in [wngfra/dl-jupyterlab](https://hub.docker.com/r/wngfra/dl-jupyterlab) for data analysis
-2. Provided `docker-compose.yml` to set up a `functional-data-analysis` container for tactile signal analysis
+1. `Dockerfile` is provides in `docker` directory
+2. Provided `docker-compose.yml` to set up a `jupyterlab` container for tactile signal analysis
 3. Check `analysis.ipynb` for preliminary data analysis
+4. Simply run `docker-compose up` to bring up the container
 
 ## Note
 * `CAD` contains the `SolidWorks` design for 3D printing to mount the CPM-finger sensor and fabric samples
